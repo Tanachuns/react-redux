@@ -2,11 +2,35 @@
 import { counter1Selector ,decrease,increase, setValueAsync} from '../store/slices/counter1Slice'
 import { useSelector } from 'react-redux/'
 import { useAppDispatch } from '../store/store'
+import { Table } from 'antd'
 type Props = {}
 
 export default function Home({}: Props) {
     const dispatch = useAppDispatch();
     const counter1Reducer = useSelector(counter1Selector)
+    console.log(counter1Reducer.countries)
+    const columns = [
+        {
+          title: 'Name',
+          dataIndex: "Name",
+          key: 'name',
+          sorter: (a:any, b:any) => a.name.common.localeCompare(b.name.common),
+          render: (_:any,item:any) => {
+            return item.name.common
+          }
+
+
+        },
+        {
+            title: 'Region',
+            dataIndex: "region",
+            key: 'region',
+          sortDirections: ['descend'],
+
+          sorter: (a:any, b:any) => a.region.localeCompare(b.region),
+          },
+     
+      ];
   return (
     <>
  
@@ -26,20 +50,7 @@ export default function Home({}: Props) {
       
       
      {counter1Reducer.loading?<h1>Loading...</h1>:
-     <div style={{height:"200px",overflow:"scroll"}}>
-     <table >
-        <thead>
-          <th>
-            <td></td>
-          </th>
-        </thead>
-        <tbody >
-          {counter1Reducer.countries.map((item:any,idx:number)=>{
-            return <tr key={idx}><td>{item.name.common}</td></tr>
-          })}
-        </tbody>
-      </table>
-      </div>
+            <Table dataSource={counter1Reducer.countries} columns={columns} />
     }
     
       <p>
