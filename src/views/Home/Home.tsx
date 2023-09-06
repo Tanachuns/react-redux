@@ -1,14 +1,15 @@
 
-import { counter1Selector ,decrease,increase, setValueAsync} from '../store/slices/counter1Slice'
+import { counter1Selector ,decrease,increase, setValueAsync} from '../../store/slices/counter1Slice'
 import { useSelector } from 'react-redux/'
-import { useAppDispatch } from '../store/store'
+import { useAppDispatch } from '../../store/store'
 import { Table } from 'antd'
+import { getPLA } from '../../controllers'
 type Props = {}
 
 export default function Home({}: Props) {
     const dispatch = useAppDispatch();
     const counter1Reducer = useSelector(counter1Selector)
-    console.log(counter1Reducer.countries)
+    console.log(getPLA())
     const columns = [
         {
           title: 'Name',
@@ -25,8 +26,6 @@ export default function Home({}: Props) {
             title: 'Region',
             dataIndex: "region",
             key: 'region',
-          sortDirections: ['descend'],
-
           sorter: (a:any, b:any) => a.region.localeCompare(b.region),
           },
      
